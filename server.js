@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const pDataLinearGraph1 = require('./model/data-linear-graph-p1.json');
 const pDataLinearGraph2 = require('./model/data-linear-graph-p2.json');
 const pDataLinearGraph3 = require('./model/data-linear-graph-p3.json');
@@ -14,8 +15,20 @@ const rDataTable3 = require('./model/data-table-r3.json');
 const pDataPie = require('./model/data-pie-p.json');
 const rDataPie = require('./model/data-pie-r.json');
 
-
+const port = process.env.PORT || 3000;
 let app = express();
+
+app.use((req, res, next) => {
+    let now = new Date().toString();
+    let log = `${now}: ${req.method} ${req.url}`;
+    console.log(log);
+    fs.appendFile("server.log", log + "\n", (err) => {
+        if (err) {
+            console.log("Unable to append to server.log");
+        }
+    });
+    next();
+});
 
 app.use(express.static(__dirname));
 
@@ -78,6 +91,6 @@ app.get("/api/Statistics/GetPieChartStatisticsData/2", (req, res) => {
 });
 
 
-app.listen(3007, () => {
-    console.log("Server is up on port 3007");
+app.listen(port, () => {
+    console.log(`Server is up on port ${port}`);
 });
