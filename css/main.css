@@ -6602,6 +6602,12 @@ button.close {
 .responsive-tabs-container {
   margin-top: 65px; }
 
+.cb-bl h2 {
+  margin: 0; }
+
+.cb-bl .btn-group--select {
+  justify-content: flex-end; }
+
 .sm-mt {
   margin-top: 35px; }
 
